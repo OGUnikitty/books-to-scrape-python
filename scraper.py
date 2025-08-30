@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import csv
 
 # Book definition
 class Book:
@@ -37,4 +38,14 @@ def getEveryPage():
         getBookDetail(main_container)
 
 getEveryPage()
-print(len(database)) # This should print 1000
+# Saving to CSV file
+print('Saving data to books.csv...')
+with open('books.csv', 'w', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Title', 'Price'])  # Write the header row
+
+    for book in database:
+        writer.writerow([book.title, book.price])  # Write each book's data
+
+print('Well done scraper!')
+print(f"Total number of books scraped: {len(database)}")
